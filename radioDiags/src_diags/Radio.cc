@@ -216,8 +216,8 @@ Radio::Radio(int deviceNumber,uint32_t rxSampleRate,
     receiveDataProcessorPtr->setDemodulatorMode(IqDataProcessor::Fm);
 
     // Initialize the AGC with an operating point of -12dBFs.
-    // and a signal magnitude size of 7 bits.
-    success = agc_init(-12,7,setGainCallback,getGainCallback);
+    // a max gain of 46dB, and a signal magnitude size of 7 bits.
+    success = agc_init(-12,46,7,setGainCallback,getGainCallback);
 
     // Create the event consumer thread.
     pthread_create(&eventConsumerThread,0,
