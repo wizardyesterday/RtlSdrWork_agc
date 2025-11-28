@@ -243,7 +243,7 @@ unsigned short console::getLine(char *bufferPtr,unsigned short bufferLength)
       case '\r': // yeah we get the carriage return with telnet
         break;
 
-      case '0r': // string terminator
+      case '00': // string terminator
         break;
 
       case '\n': // end of line
