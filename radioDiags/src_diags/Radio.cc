@@ -27,19 +27,63 @@ extern void nprintf(FILE *s,const char *formatPtr, ...);
 static Radio *myRadioPtr;
 static char *agcDisplayBufferPtr;
 
+/*****************************************************************************
+
+  Name: setGainCallback
+
+  Purpose: The purpose of this function is to provide a mechanism
+  for the AGC function to set the gain of the IF amplifier. This
+  callback allows a C language function to invoke C++ code, thus
+  decoupling to circumvent language restrictions.
+
+  Calling Sequence: setGainCallback(gainInDb)
+
+  Inputs:
+
+    gainInDb - the gain, in decibels for which to set the IF
+    amplifier to.
+
+
+  Outputs:
+
+    None.
+
+*****************************************************************************/
 static void setGainCallback(uint32_t gainIndB)
 {
   int status;
 
+  // Set the IF gain via the Radio API.
   status = myRadioPtr->setReceiveIfGainInDb(0,gainIndB);
 
   return;
 
 } // setGainCallback
 
+/*****************************************************************************
+
+  Name: getGainCallback
+
+  Purpose: The purpose of this function is to provide a mechanism
+  for the AGC function to retrieve the current IF amplifier gain.
+  This callback allows a C language function to invoke C++ code, thus
+  decoupling to circumvent language restrictions.
+
+  Calling Sequence: gainIndBgetGainCallback()
+
+  Inputs:
+
+    None.
+
+  Outputs:
+
+    gainInDb - the current gain, in decibels of the IF amplifier.
+
+*****************************************************************************/
 static uint32_t getGainCallback(void)
 {
 
+  // Retrieve from e global variable for speed.
   return (radio_adjustableReceiveGainInDb);
 
 } // getGainCallback
